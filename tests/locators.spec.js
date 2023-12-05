@@ -5,9 +5,14 @@ test('has title', async ({ page }) => {
 
     await page.goto('https://webdriveruniversity.com/Contact-Us/contactus.html');
 
+
     // find single element 
     let singleElement = await page.$('h2[name= "contactme"]')
     expect(singleElement).not.toBeNull()
+
+
+    let singleElement2 = await page.locator('h2[name= "contactme"]')
+   
 
     // find multiple element
     let multipleElements = await page.$$('input[type="text"]')

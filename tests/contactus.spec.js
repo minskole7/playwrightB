@@ -1,12 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-
-
-
-
 // Action 
-
-
 // Assertion
 test('verify contact us form with valid data',async({page})=>{
     // Arrangement 
@@ -50,9 +44,7 @@ test('verify contact us form with valid data',async({page})=>{
     await page.locator("input[name='email']").fill("chinmaydeshpande010gmail.com")
     await page.locator("textarea[name='message']").fill("I am learning js")
     await page.locator("input[type ='submit']").click()
-    
     await page.waitForTimeout(2000);
-
     let str = await page.locator("body").innerText()
     expect(str).toContain("Error: Invalid email address")
     
