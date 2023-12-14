@@ -42,16 +42,14 @@ test('clearing the input field', async ({ page }) => {
 
 
 test('getting the attribute value', async ({ page }) => {
-
     //getAttribute('id')
     //getAttribute('id')
-
 
 });
 
 test('getting the text value of element', async ({ page }) => {
     await page.goto('https://webdriveruniversity.com/Dropdown-Checkboxes-RadioButtons/index.html')
-    let textContentVal= await page.$eval('h1',(el)=>el.textContent())
+    let textContentVal= await page.$eval('h1',(el)=>el.textContent)
     assert.strictEqual(textContentVal,"Dropdown Menu(s), Checkboxe(s) &amp; Radio Button(s)")
 });
 
