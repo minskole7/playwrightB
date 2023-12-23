@@ -1,46 +1,59 @@
+
 const { test, expect } = require('@playwright/test');
 const assert = require ('assert');
-
-test("all children element",async({page})=>{
- 
+test("children elements",async({page})=>{
+    // arrangement
     await page.goto('https://webdriveruniversity.com/Data-Table/index.html')
-    let elementCount = await page.$$('.traversal-drinks-list > *');
-    expect(elementCount.length).toBe(5)
+    let childrens = await page.$$('.traversal-buttons > *')
+    expect(childrens.length).toBe(5)
    
 })
 
-test("finding previous element sibling",async({page})=>{
+test("firstChild",async({page})=>{
     // arrangement
     await page.goto('https://webdriveruniversity.com/Data-Table/index.html')
-    //let elementCount = await page.$('#milk')
-    let preEtext = await page.$eval('#milk',(element)=>{
-        return element.previousElementSibling.textContent.trim(); // 'Tea'
-    })
-    expect(preEtext).toBe('Tea')
+    let firstText = await page.locator('.traversal-drinks-list > li').first().innerText();
+    expect(firstText).toBe("Coffee")
 })
 
-test("finding next element sibling",async({page})=>{
+test("lastChild",async({page})=>{
+    // arrangement
     await page.goto('https://webdriveruniversity.com/Data-Table/index.html')
-    let preEtext = await page.$eval('#milk',(element)=>{
-        return element.nextElementSibling.textContent.trim()
-    })
-    expect(preEtext).toBe('Espresso')
+    let lastText = await page.locator('.traversal-drinks-list > li').last().innerText();
+    expect(lastText).toBe("Sugar")
+
 })
 
-test("finding nextAll element sibling",async({page})=>{
+test("nth:child",async({page})=>{
+    // arrangement
     await page.goto('https://webdriveruniversity.com/Data-Table/index.html')
-    let allNextSibling = await page.$$('#coffee ~ *')
-    expect(allNextSibling.length).toBeGreaterThan(2)
+    let lastText = await page.locator('.traversal-drinks-list > li').nth(1).innerText()
+    expect(lastText).toBe("Tea")
+
 })
 
-test("finding previousAll element sibling",async({page})=>{
+test.only("prevElement",async({page})=>{
+    // arrangement
     await page.goto('https://webdriveruniversity.com/Data-Table/index.html')
-    let allprevious = await page.$$('#sugar ~ *')
-    expect(allprevious.length).toBeGreaterThan(2)
+    let milkElement = await page.$('#milk')
+    let txtFound = await milkElement.evaluate((el)=>{
+        let text = el.previousElementSibling.textContent
+        return text
+    });
+    expect(txtFound).toBe('Tea')
+
 })
 
-test("finding previousAll element sibling",async({page})=>{
+test.only("nextElement",async({page})=>{
+    // arrangement
     await page.goto('https://webdriveruniversity.com/Data-Table/index.html')
-    let allSiblings = await page.$$('#sugar ~ *')
-    expect(allSiblings.length).toBe(4)
+    let milkElement = await page.$('#milk')
+    let txtFound = await milkElement.evaluate((el)=>{
+        let text = el.nextElementSibling.textContent
+        return text
+    });
+    expect(txtFound).toBe('Espresso')
+
 })
+
+
